@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import Joi from "joi";
 
 const app = express();
 app.use(bodyParser.json());
@@ -31,7 +32,10 @@ app.get("/api/data/:id", (req, res) => {
 });
 
 app.post("/api/data", (req, res) => {
-  const data = req.body;
+  const data = {
+    id: fileData.length + 1,
+    name: req.body.name,
+  };
   console.log(data, "-> ", req.body);
   fileData.push(data);
   return res.json({
