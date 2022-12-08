@@ -34,7 +34,7 @@ app.get("/api/data/:id", (req, res) => {
 app.post("/api/data", (req, res) => {
   const schema = { name: Joi.string().required().min(3) };
 
-  const result = Joi.validate(req.body, schema);
+  const result = Joi.valid(req.body, schema);
 
   console.log(result);
 
