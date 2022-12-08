@@ -32,11 +32,12 @@ app.get("/api/data/:id", (req, res) => {
 });
 
 app.post("/api/data", (req, res) => {
-  const schema = Joi.object({ name: Joi.string().required().min(3) });
+  const schema = { name: Joi.string().min(3).required() };
 
-  const result = Joi.va(req.body, schema);
-
-  console.log(schema.validate(req.body.name, result));
+  const result = Joi.validate(req.body, schema);
+  console.log(result);
+  if (result) {
+  }
 
   const data = {
     id: fileData.length + 1,
