@@ -67,9 +67,9 @@ app.put("/api/data/:id", (req, res) => {
   const { id } = req.params;
 
   const index = fileData.findIndex((ob) => ob.id === parseInt(id));
-
-  res.send(index);
-
+  if (id) {
+    res.status(200).send({ index });
+  }
   return;
 });
 
