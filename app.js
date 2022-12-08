@@ -14,6 +14,13 @@ let fileData = [
   { id: 5, name: "Smart" },
 ];
 
+const validate = (name) => {
+  const schema = { name: Joi.string().min(3).required() };
+
+  const result = Joi.validate(name, schema);
+  return result;
+};
+
 app.get("/", (req, res) => {
   return res.send("hello world");
 });
@@ -32,10 +39,7 @@ app.get("/api/data/:id", (req, res) => {
 });
 
 app.post("/api/data", (req, res) => {
-  const schema = { name: Joi.string().min(3).required() };
-
-  const result = Joi.validate(req.body, schema);
-
+  const result = validate(req.body);
   if (result.error) {
     res.status(400).send(result.error.details[0].message);
     return;
@@ -66,7 +70,11 @@ app.delete("/api/data/:id", (req, res) => {
 app.put("/api/data/:id", (req, res) => {
   const { id } = req.params;
   const name = req.body.name;
-  console.log(name);
+  const result = validate(req.body);
+
+  if (result.error) {
+    return res.status(400).send(result.error.details[0].message);
+  }
 
   const index = fileData.findIndex((ob) => ob.id === parseInt(id));
   console.log(index);
