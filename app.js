@@ -35,8 +35,10 @@ app.post("/api/data", (req, res) => {
   const schema = { name: Joi.string().min(3).required() };
 
   const result = Joi.validate(req.body, schema);
-  console.log(result);
-  if (result) {
+
+  if (result.error) {
+    res.status(400).send(result.error);
+    return;
   }
 
   const data = {
