@@ -32,9 +32,11 @@ app.get("/api/data/:id", (req, res) => {
 });
 
 app.post("/api/data", (req, res) => {
-  const schema = { name: Joi.string().required().min(3) };
+  const schema = Joi.object({ name: Joi.string().required().min(3) }).with(
+    "name"
+  );
 
-  const result = Joi.valid(req.body, schema);
+  const result = schema.validate(req.body);
 
   console.log(result);
 
