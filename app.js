@@ -65,12 +65,18 @@ app.delete("/api/data/:id", (req, res) => {
 
 app.put("/api/data/:id", (req, res) => {
   const { id } = req.params;
+  const name = req.body.name;
+  console.log(name);
 
   const index = fileData.findIndex((ob) => ob.id === parseInt(id));
-  if (id) {
-    res.status(200).send({ index });
+  console.log(index);
+  if (index > -1) {
+    fileData[index].name = name;
+    console.log(fileData);
+    return res.status(200).send({ message: "Data Updated", fileData });
   }
-  return;
+
+  res.send({ error: "Id not found" });
 });
 
 const port = process.env.PORT || 3000;
