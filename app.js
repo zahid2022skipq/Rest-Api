@@ -66,8 +66,11 @@ app.delete("/api/data/:id", (req, res) => {
 app.put("/api/data/:id", (req, res) => {
   const { id } = req.params;
 
-  const index = fileData.find((ob) => ob.id === id);
-  console.log(index);
+  const index = fileData.findIndex((ob) => ob.id === parseInt(id));
+
+  res.send(index);
+
+  return;
 });
 
 const port = process.env.PORT || 3000;
